@@ -1,5 +1,4 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
-#include "pch.h"
 #include "framework.h"
 
 DWORD WINAPI Main(LPVOID) {
@@ -7,10 +6,15 @@ DWORD WINAPI Main(LPVOID) {
     FILE* file;
     freopen_s(&file, "CONOUT$", "w+", stdout);
     SetConsoleTitleA("NotTacos Skin Changer | GUI COMING SOON");
-    AFortPlayerPawn* Pawn;
-    static UClass* Skin = reinterpret_cast<UClass*>(UECore::GObjects->FindObjectFast("")); // put any skin you want like CID_028_Athena_Commando_F or something idk
-    if (Pawn) {
-        Pawn->ServerChoosePart(EFortCustomPartType::Body, Skin);
+    if (!SDK::Init()) {
+        std::cout << "Failed to initalize SDK";
+    }
+    if (SDK::Init()) {
+        SDK::AFortPlayerPawn* Pawn;
+        static SDK::UClass* Skin = reinterpret_cast<SDK::UClass*>(SDK::UECore::GObjects->FindObjectFast("")); // put any skin you want like CID_028_Athena_Commando_F or something idk
+        if (Pawn) {
+            Pawn->ServerChoosePart(EFortCustomPartType::Body, Skin);
+        }
     }
 
     return 0;
