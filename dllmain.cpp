@@ -14,7 +14,7 @@ DWORD WINAPI Main(LPVOID) {
         SDK::AFortPlayerPawn* Pawn{};
         static SDK::UClass* Skin = reinterpret_cast<SDK::UClass*>(SDK::UECore::GObjects->FindObjectFast(Globals::cosmetic));
         if (Pawn) {
-            Pawn->ServerChoosePart(EFortCustomPartType::Body, Skin);
+            Pawn->ServerChoosePart(Globals::cosmetictype, Skin);
         }
     }
 

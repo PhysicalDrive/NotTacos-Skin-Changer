@@ -19,3 +19,7 @@
 #include "memcury.h"
 #include "SDK/SDK.h"
 using namespace std;
+namespace parttype {
+	auto Skin = EFortCustomPartType::Body;
+	auto Backbling = EFortCustomPartType::Backpack;
+}
