@@ -18,3 +18,4 @@
 #include <unordered_map>
 #include "memcury.h"
 #include "SDK/SDK.h"
+using namespace std;

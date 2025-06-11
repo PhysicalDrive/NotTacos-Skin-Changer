@@ -1,5 +1,6 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "framework.h"
+#include "globals.h"
 
 DWORD WINAPI Main(LPVOID) {
     AllocConsole();
@@ -11,7 +12,7 @@ DWORD WINAPI Main(LPVOID) {
     }
     if (SDK::Init()) {
         SDK::AFortPlayerPawn* Pawn{};
-        static SDK::UClass* Skin = reinterpret_cast<SDK::UClass*>(SDK::UECore::GObjects->FindObjectFast("")); // put any skin you want like CID_028_Athena_Commando_F or something idk
+        static SDK::UClass* Skin = reinterpret_cast<SDK::UClass*>(SDK::UECore::GObjects->FindObjectFast(Globals::cosmetic));
         if (Pawn) {
             Pawn->ServerChoosePart(EFortCustomPartType::Body, Skin);
         }
@@ -28,7 +29,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-        CreateThread(0, 0, Main, 0, 0, 0);
+        CreateThread(0, 0, Main, lpReserved, 0, 0);
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
