@@ -6,3 +6,6 @@
 - [Milxnor](https://github.com/Milxnor) - Types for Character parts
 - [NotTacs](https://github.com/NotTacs) - UESDK
 - [Kemo](https://github.com/kem0x) - Memcury
+## TODO
+- [ ] Port this to UESDK LIB
+- [ ] Make imgui
