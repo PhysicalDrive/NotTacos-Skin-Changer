@@ -1,6 +1,7 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "framework.h"
 #include "globals.h"
+#include "gui.h"
 
 DWORD WINAPI Main(LPVOID) {
     AllocConsole();
@@ -8,14 +9,10 @@ DWORD WINAPI Main(LPVOID) {
     freopen_s(&file, "CONOUT$", "w+", stdout);
     SetConsoleTitleA("NotTacos Skin Changer | GUI COMING SOON");
     if (!SDK::Init()) {
-        std::cout << "Failed to initalize SDK";
+        MessageBoxA(NULL, "Failed to initalize SDK.", "NotTacos's Skin Changer", MB_OK);
     }
     if (SDK::Init()) {
-        SDK::AFortPlayerPawn* Pawn{};
-        static SDK::UClass* Skin = reinterpret_cast<SDK::UClass*>(SDK::UECore::GObjects->FindObjectFast(Globals::cosmetic));
-        if (Pawn) {
-            Pawn->ServerChoosePart(Globals::cosmetictype, Skin);
-        }
+        CreateThread(0, 0, GuiThread, 0, 0, 0);
     }
 
     return 0;
