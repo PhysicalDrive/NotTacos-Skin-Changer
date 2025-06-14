@@ -9,7 +9,6 @@
 #include "ImGui/imgui_impl_dx11.h"
 #include "Kiero/kiero.h"
 #include "framework.h"
-#include "globals.h"
 
 typedef HRESULT(__stdcall* Present) (IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
 typedef LRESULT(CALLBACK* WNDPROC)(HWND, UINT, WPARAM, LPARAM);
