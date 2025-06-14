@@ -9,6 +9,7 @@
 #include "ImGui/imgui_impl_dx11.h"
 #include "Kiero/kiero.h"
 #include "framework.h"
+#include "globals.h"
 
 typedef HRESULT(__stdcall* Present) (IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
 typedef LRESULT(CALLBACK* WNDPROC)(HWND, UINT, WPARAM, LPARAM);
@@ -88,16 +89,43 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 		ImGui::SetNextWindowSize(ImVec2(560, 345));
 
 		ImGui::Begin("NotTacos's Skin Changer", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-		static string cosmeticid;
 
-		//ImGui::InputText("Cosmetic ID:", &cosmeticid);
+		static char cosmeticid[128] = "";
+		static bool skin = false;
+		static bool backbling = false;
+		static bool yes = true;
+		auto cosmetictype = EFortCustomPartType::Body;
+		ImGui::InputText("Cosmetic ID:", cosmeticid, sizeof(cosmeticid));
+		if (ImGui::Checkbox("Skin", &skin)) {
+			cosmetictype = EFortCustomPartType::Body;
+		}
+		if (ImGui::Checkbox("Back Bling", &backbling)) {
+		    cosmetictype = EFortCustomPartType::Backpack;
+		}
+		if (ImGui::Button("Refresh")) {
+			yes = true; // just in case
+			MessageBoxA(NULL, "Successfully refreshed.", "NotTacos's Skin Changer", MB_OK);
+		}
 		if (ImGui::Button("Change cosmetic")) {
-			SDK::AFortPlayerPawn* Pawn{};
-			static SDK::UClass* Skin = reinterpret_cast<SDK::UClass*>(SDK::UECore::GObjects->FindObjectFast(Globals::cosmetic));
-			if (Pawn) {
-				Pawn->ServerChoosePart(Globals::cosmetictype, Skin);
+			if (backbling || skin) {
+				MessageBoxA(NULL, "You can't select 2. Press refresh once you picked one.", "NotTacos's Skin Changer", MB_OK);
+				yes = false;
 			}
-			MessageBoxA(NULL, "Successfully changed cosmetic. Enjoy!", "NotTacos's Skin Changer", MB_OK);
+			if (!backbling || !skin) {
+				MessageBoxA(NULL, "Please select one of these. Press refresh once you picked one.", "NotTacos's Skin Changer", MB_OK);
+				yes = false;
+			}
+			if (yes) {
+				SDK::AFortPlayerPawn* Pawn{};
+				static SDK::UClass* Skin = reinterpret_cast<SDK::UClass*>(SDK::UECore::GObjects->FindObjectFast(cosmeticid));
+				if (Pawn) {
+					Pawn->ServerChoosePart(cosmetictype, Skin);
+				}
+				else {
+					MessageBoxA(NULL, "Failed to detect pawn.", "NotTacos's Skin Changer", MB_OK);
+				}
+				MessageBoxA(NULL, "Successfully changed cosmetic. Enjoy!", "NotTacos's Skin Changer", MB_OK);
+			}
 		}
 		ImGui::End();
 
