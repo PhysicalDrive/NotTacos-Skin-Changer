@@ -7,4 +7,4 @@
 - [NotTacs](https://github.com/NotTacs) - UESDK
 - [Kemo](https://github.com/kem0x) - Memcury
 ## TODO
-- [ ] add more to gui
+- [ ] fix bugs ig
