@@ -107,7 +107,7 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 		}
 		if (ImGui::Button("Change cosmetic")) {
 			if (backbling || skin) {
-				MessageBoxA(NULL, "You can't select 2. Press refresh once you picked one.", "NotTacos's Skin Changer", MB_OK);
+				MessageBoxA(NULL, "You can't select 2. Press refresh once you picked only one.", "NotTacos's Skin Changer", MB_OK);
 				yes = false;
 			}
 			if (!backbling || !skin) {
