@@ -151,6 +151,10 @@ bool SDK::Init()
 		}
 	}
 
+	if (Scanner.Get() == 0) {
+		Scanner = Memcury::Scanner::FindStringRef(L"UMeshNetworkComponent::ProcessEvent: Invalid mesh network node type: %s").ScanFor({ 0x5F, 0xE9 }).RelativeOffset(1);
+	}
+
 	if (Scanner.Get() == 0)
 		return false;
 
